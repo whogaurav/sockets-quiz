@@ -32,7 +32,7 @@ module.exports = {
 
   getFinalResult: () => {
     var groupId = "test";
-    return fetch(`${url}//getFinalResult`, {
+    return fetch(`${url}/getFinalResult`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -40,6 +40,17 @@ module.exports = {
       body: JSON.stringify({
         groupId
       })
+    }).then(response => response.json());
+  },
+
+  reset: () => {
+    var groupId = "test";
+    return fetch(`${url}/reset`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: ""
     }).then(response => response.json());
   },
 

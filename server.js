@@ -59,6 +59,11 @@ nextApp
 
       Game.findOne({ name: name })
         .then(result => {
+          if (!result) {
+            return res
+              .status(400)
+              .json({ msg: "Please send username in params" });
+          }
           result.answers.push({
             quesNo: ques,
             ans: ans
@@ -116,7 +121,7 @@ nextApp
     // });
 
     server.post("/getFinalResult", (req, res) => {
-      const { groupId } = req.body;
+      const groupId = "test";
 
       Game.find(
         {
@@ -124,6 +129,10 @@ nextApp
         },
         (err, result) => res.json(result)
       );
+    });
+
+    server.post("/reset", (req, res) => {
+      Game.remove({}, (err, result) => res.json(result));
     });
 
     server.get("*", (req, res) => {

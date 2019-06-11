@@ -75,6 +75,13 @@ html, body, #__next, .layout {
     color: #FFF;
 }
 
+.blue-button:hover{
+    background-image: linear-gradient(to right, #F00000 0%, #DC281E 51%, #F00000 100%);
+    border-radius: 50px;
+    padding: 15px 30px;
+    color: #FFF;
+}
+
 .button-color{
     color: #FFF !important;
     background-image: linear-gradient(to right, #F00000 0%, #DC281E 51%, #F00000 100%)
@@ -119,3 +126,38 @@ html, body, #__next, .layout {
     margin-top: 20px;
 }
 
+.progress{
+    border-radius: 2.25rem  !important;
+    width: 50%;
+    height: 2.5em !important;
+    display: inline-flex;
+    background-color: #e0e0e0 !important;
+}
+
+.progress-bar{
+    padding-left: 10px;
+}
+
+.result-container{
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+.lead{
+    width: 30%;
+}
+
+.modal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.modal-body{
+    -webkit-box-shadow: 10px 10px 77px 2px rgba(0,0,0,0.5);
+    -moz-box-shadow: 10px 10px 77px 2px rgba(0,0,0,0.5);
+    box-shadow: 10px 10px 77px 2px rgba(0,0,0,0.5);
+    padding: 3rem !important;
+}

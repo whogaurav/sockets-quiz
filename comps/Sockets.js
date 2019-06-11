@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Router from "next/router";
 const { socketUrl } = require("../config");
+import { reset } from "../helpers";
 
 export default class Sockets extends Component {
   state = {
@@ -37,6 +38,7 @@ export default class Sockets extends Component {
   };
 
   onReset = () => {
+    reset();
     this.ws.send(JSON.stringify({ type: "reset" }));
   };
 
@@ -72,17 +74,17 @@ export default class Sockets extends Component {
           <div>
             <button
               className="blue-button blue-button-width"
-              onClick={this.onReset}
+              onClick={this.onShowResult}
             >
-              Reset
+              Show Results
             </button>
           </div>
           <div>
             <button
               className="blue-button blue-button-width"
-              onClick={this.onShowResult}
+              onClick={this.onReset}
             >
-              Show Results
+              Reset
             </button>
           </div>
         </div>

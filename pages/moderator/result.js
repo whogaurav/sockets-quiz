@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Layout from "../../comps/Layout";
-import Button from "../../comps/Button";
 import { getFinalResult } from "../../helpers";
 
 export default class Result extends Component {
@@ -13,10 +12,13 @@ export default class Result extends Component {
     };
   }
 
-  onClick = async e => {
-    let groupId = "groupIdTest";
-    let data = await getFinalResult(groupId);
+  componentDidMount() {
+    this.getResults();
+  }
 
+  getResults = async e => {
+    let groupId = "test";
+    let data = await getFinalResult(groupId);
     this.setState({
       data: data,
       show: !this.state.show
@@ -24,37 +26,17 @@ export default class Result extends Component {
   };
 
   render() {
-    let show = this.state.show;
+    const { show } = this.state;
 
     return (
       <Layout className="secondary-screens-bg">
-        <div className="main-screen-container">
-          <Button
-            onClick={this.onClick}
-            title="Get Result"
-            style={{
-              background: "linear-gradient(#a1defa, #5ca7de)",
-              borderRadius: "50px",
-              padding: "15px",
-              width: "25%"
-            }}
-          />
-
-          {this.state.show &&
+        <div className="main-screen-container" style={{ width: "80%" }}>
+          {show &&
             this.state.data.length > 0 &&
             this.state.data.map((item, index) => (
-              <div key={index}>
+              <div key={index} className="result-container">
                 <small className="lead">{item.name} &nbsp;&nbsp;</small>
-                <div
-                  className="progress"
-                  style={{
-                    borderRadius: "2.25rem",
-                    width: "50%",
-                    height: "2.5em",
-                    display: "inline-flex",
-                    backgroundColor: "#e0e0e0"
-                  }}
-                >
+                <div className="progress">
                   <div
                     className="progress-bar"
                     role="progressbar"

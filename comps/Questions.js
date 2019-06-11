@@ -54,10 +54,14 @@ export default class QuestionsComponent extends Component {
     this.ws.onclose = () => {
       console.log("disconnected");
       // automatically try to reconnect on connection loss
-      this.setState({
-        ws: new WebSocket(URL)
-      });
+      // this.setState({
+      //   ws: new WebSocket(URL)
+      // });
     };
+  }
+
+  componentWillUnmount() {
+    this.ws.close();
   }
 
   onClick = e => {
@@ -132,6 +136,20 @@ export default class QuestionsComponent extends Component {
     let timeLeft = 20 - this.state.time;
     if (timeLeft <= 0) timeLeft = 0;
 
+    let Message = null;
+
+    Message = props => (
+      <div className="modal-body">Points Scored: {props.score || 0}</div>
+    );
+
+    if (timeLeft == 0)
+      Message = () => <div className="modal-body">Time's Up</div>;
+
+    if (this.state.gameFinish)
+      Message = () => (
+        <div className="modal-body">Well done! You have finished the quiz</div>
+      );
+
     return (
       <div>
         <div
@@ -139,24 +157,14 @@ export default class QuestionsComponent extends Component {
           id="myModal"
           style={{
             display:
-              this.state.submitted || this.state.gameFinish ? "block" : ""
+              (timeLeft <= 0) | this.state.submitted || this.state.gameFinish
+                ? "flex"
+                : "none"
           }}
         >
           <div className="modal-dialog">
             <div className="modal-content">
-              {/* Modal Header */}
-              <div className="modal-header">
-                <h4 className="modal-title">Score Board</h4>
-                <button type="button" className="close" data-dismiss="modal">
-                  ×
-                </button>
-              </div>
-              {/* Modal body */}
-              {this.state.gameFinish ? (
-                <div className="modal-body"> Welldone ! GameOver</div>
-              ) : (
-                <div className="modal-body">{this.state.score || 0}</div>
-              )}
+              <Message score={this.state.score} />
             </div>
           </div>
         </div>
@@ -189,7 +197,7 @@ export default class QuestionsComponent extends Component {
           ))}
           <div className="clearfix" />
         </div>
-        {!this.state.timeEnded && (
+        {timeLeft > 0 && (
           <button
             className="blue-button blue-button-width"
             onClick={this.submitAnswer}
