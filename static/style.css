@@ -1,0 +1,121 @@
+html, body, #__next, .layout {
+    height: 100%;
+    font-family: 'Lato', sans-serif;
+}
+
+*:focus {outline:none !important}
+
+.main-screen {
+    height: 100%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.main-screen-bg {
+    background-image: url(/static/tab.jpg);
+    background-color: #eff1f0;
+}
+
+.secondary-screens-bg {
+    background-image: url(/static/bg.jpg);
+    background-color: #eceeed;
+}
+
+.instructions-screens-bg {
+    background-image: url(/static/bg1.jpg);
+    background-color: #eceeed;
+}
+
+.main-screen-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-self: center;
+    background-color: rgb(255,255,255,0.8);
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 80px;
+}
+
+.moderator-container {
+    height: 100%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.moderator-container-bg{
+    background-image: url(/static/tv.jpg);
+}
+
+.moderator-container-start-screen {
+    background-image: url(/static/bg.jpg);
+    height: 100%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.blue-button{
+    background-image: linear-gradient(#a1defa, #5ca7de);
+    border-radius: 50px;
+    padding: 15px 30px;
+    color: #FFF;
+}
+
+.button-color{
+    color: #FFF !important;
+    background-image: linear-gradient(to right, #F00000 0%, #DC281E 51%, #F00000 100%)
+}
+
+.blue-button-width{
+    min-width: 200px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.welcome-heading{
+    margin-bottom: 30px;
+}
+
+.error-message{
+    color: red;
+    height: 20px;
+    min-width: 550px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.team-name-input{
+    text-align: center;
+    font-size: 30px !important;
+}
+
+.instructions-container{
+    width: 65%;
+    text-align: center;
+}
+
+.start-screen {
+    display: flex;
+    justify-content: space-between;
+}
+
+.options-container{
+    margin-bottom: 20px;
+    text-align: "center";
+    margin-top: 20px;
+}
+
