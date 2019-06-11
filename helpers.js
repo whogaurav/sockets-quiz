@@ -1,4 +1,5 @@
 const fetch = require("isomorphic-unfetch");
+const { url } = require("../config");
 
 module.exports = {
   getScore: time => {
@@ -12,7 +13,7 @@ module.exports = {
     }
   },
   updateAnswer: (name, ques, ans, score) => {
-    fetch("http://localhost:3000/postResult", {
+    fetch(`${url}/postResult`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -31,7 +32,7 @@ module.exports = {
 
   getFinalResult: () => {
     var groupId = "test";
-    return fetch("http://localhost:3000/getFinalResult", {
+    return fetch(`${url}//getFinalResult`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -44,7 +45,7 @@ module.exports = {
 
   createUser: (name, cb) => {
     var groupId = "test";
-    fetch("http://localhost:3000/createUser", {
+    fetch(`${url}/createUser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
