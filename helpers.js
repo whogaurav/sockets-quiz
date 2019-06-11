@@ -1,5 +1,5 @@
 const fetch = require("isomorphic-unfetch");
-const { url } = require("../config");
+const { url } = require("./config");
 
 module.exports = {
   getScore: time => {
