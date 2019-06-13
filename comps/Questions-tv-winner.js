@@ -14,8 +14,6 @@ export default class QuestionsComponent extends Component {
     this.fetchResults();
   }
 
-  resultInterval = null;
-
   fetchResults = async e => {
     const data = await getFinalResult();
     this.setState({
@@ -23,50 +21,35 @@ export default class QuestionsComponent extends Component {
     });
   };
 
-  getResults = () => {
-    this.resultInterval = setInterval(this.fetchResults, 1000);
-  };
-
   render() {
     const { data } = this.state;
-    return (
-      <div style={{ width: "100%" }}>
-        <h2>And the winner is</h2>
-        <br />
-        {data.length > 1 && (
-          <div>
-            <h1>
-              Team: {data[0].totalScore > data[1].totalScore && data[0].name}
-            </h1>
-            <br />
-          </div>
-        )}
 
-        {data.length > 0 &&
-          data.map((item, index) => (
-            <div key={index} className="result-container">
-              <small className="lead">{item.name} &nbsp;&nbsp;</small>
-              <small
-                className="lead"
-                style={{ fontSize: "12px", position: "relative", top: "7px" }}
-              >
-                Total Time: {parseFloat(item.time).toFixed(2)}
-              </small>
-              <div className="progress">
-                <div
-                  className="progress-bar"
-                  role="progressbar"
-                  style={{ width: `${(item.totalScore / 40000) * 100}%` }}
-                  aria-valuenow={item.totalScore}
-                  aria-valuemin={0}
-                  aria-valuemax={40000}
-                >
-                  Score: {item.totalScore}
-                </div>
-              </div>
-            </div>
-          ))}
-      </div>
-    );
+    let winner = null;
+    if (data.length > 1) {
+      if (data[0].totalScore > data[1].totalScore) {
+        winner = data[0];
+      }
+      if (data[0].totalScore === data[1].totalScore) {
+        if (data[0].totalScore < data[1].totalScore) {
+          winner = data[0];
+        } else {
+          winner = data[1];
+        }
+      }
+    } else if (data.length === 1) {
+      winner = data[0];
+    } else {
+    }
+    if (winner) {
+      return (
+        <div className="ribbon">
+          <h2 className="winner-name">
+            {winner.name} : {winner.totalScore} Points
+          </h2>
+        </div>
+      );
+    } else {
+      return <h2 />;
+    }
   }
 }

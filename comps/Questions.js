@@ -190,17 +190,46 @@ export default class QuestionsComponent extends Component {
     timeLeft = Math.floor(timeLeft);
 
     let Message = null;
-    Message = props => (
-      <div className="modal-body">Points Scored: {props.score || 0}</div>
-    );
+    Message = props => {
+      if (props.score > 0) {
+        return (
+          <div className="modal-body">
+            <span className="bold-text">Congratulations</span>
+            <br /> <span className="light-text">you won</span> <br />{" "}
+            <span className="bold-text">+{props.score} Points</span>{" "}
+          </div>
+        );
+      } else {
+        return (
+          <div className="modal-body">
+            <span className="bold-text">Oops!</span>
+            <br /> <span className="light-text">Wrong Answer</span> <br />{" "}
+            <span className="bold-text">+{props.score || 0} Points</span>{" "}
+          </div>
+        );
+      }
+    };
 
-    if (timeLeft === 0)
-      Message = () => <div className="modal-body">Time's Up</div>;
+    if (timeLeft === 0 || this.state.timeUp)
+      Message = () => (
+        <div className="modal-body">
+          <span className="bold-text">Time's Up</span>
+        </div>
+      );
 
     if (this.state.gameFinish)
       Message = () => (
-        <div className="modal-body">Well done! You have finished the quiz</div>
+        <div className="modal-body">
+          <span className="bold-text">
+            Well done! <br />
+            You have finished the quiz
+          </span>
+        </div>
       );
+
+    if (timeLeft < 0) {
+      timeLeft = 0;
+    }
 
     return (
       <div>

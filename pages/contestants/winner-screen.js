@@ -12,13 +12,8 @@ const DynamicComponentWithNoSSR = dynamic(
 export default class QuestionsPage extends Component {
   render() {
     return (
-      <Layout className="secondary-screens-bg">
-        <div
-          className="main-screen-container"
-          style={{ textAlign: "center", width: "90%" }}
-        >
-          <DynamicComponentWithNoSSR {...this.props} />
-        </div>
+      <Layout className="winner-screens-bg">
+        <DynamicComponentWithNoSSR {...this.props} />
       </Layout>
     );
   }
