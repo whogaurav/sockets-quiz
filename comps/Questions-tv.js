@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Questions from "../data/questions.json";
-import { updateAnswer, getScore } from "../helpers";
+import { updateAnswer, getScore, getFinalResult } from "../helpers";
 const { socketUrl } = require("../config");
 import Router from "next/router";
 
@@ -27,22 +27,23 @@ export default class QuestionsComponent extends Component {
       closePopup: false,
       score: "",
       gameFinish: false,
-      name: ""
+      name: "",
+      data: [],
+      showWinnerScreen: false
     };
   }
 
   ws = new WebSocket(socketUrl);
 
   componentDidMount() {
-    this.setState({ name: this.props.url.query.name });
+    this.getResults();
+    this.setState({ name: "TV" });
     //this.timeFucn();
     this.init();
 
     this.ws.onopen = () => {
       console.log("connected");
-      this.ws.send(
-        JSON.stringify({ type: "client", name: this.props.url.query.name })
-      );
+      this.ws.send(JSON.stringify({ type: "client", name: "TV" }));
     };
 
     this.ws.onmessage = message => {
@@ -84,34 +85,23 @@ export default class QuestionsComponent extends Component {
     const score = getScore(this.state.time);
 
     // clear interval + reset
-    clearInterval(this.counter);
-    this.setState({ time: 20 });
+    clearInterval(this.interval);
+    this.setState({ time: 0 });
 
     if (answer == Questions[this.state.currentQuestion].answer) {
       this.setState({
         submitted: true,
         score: score
       });
-      updateAnswer(
-        name,
-        this.state.currentQuestion,
-        this.state.answer,
-        score,
-        this.state.time
-      );
+      updateAnswer(name, this.state.currentQuestion, this.state.answer, score);
     } else {
       this.setState({
         submitted: true,
         score: 0
       });
-      updateAnswer(
-        name,
-        this.state.currentQuestion,
-        this.state.answer,
-        0,
-        this.state.time
-      );
+      updateAnswer(name, this.state.currentQuestion, this.state.answer, 0);
     }
+
     if (this.state.currentQuestion == 12) {
       this.setState({
         gameFinish: true
@@ -138,13 +128,8 @@ export default class QuestionsComponent extends Component {
     }
   };
 
-  // count = 2000;
-  // counter = null;
-
   // init = () => {
-  //   this.counter = setTimeout(() => {
-  //     setInterval(this.timer, 10);
-  //   }, 700);
+  //   this.counter = setInterval(this.timer, 10);
   // };
 
   // timer = () => {
@@ -164,7 +149,7 @@ export default class QuestionsComponent extends Component {
   nextQuestion = number => {
     // clear interval + reset
     clearInterval(this.counter);
-    //this.startTime = null;
+    this.count = 2000;
     this.setState({ time: 20 });
     this.init();
 
@@ -172,10 +157,10 @@ export default class QuestionsComponent extends Component {
       this.setState({
         gameFinish: true
       });
-      return;
     }
 
     let newState = defaultState;
+
     if (!number) {
       newState.currentQuestion = this.state.currentQuestion + 1;
       this.setState(newState);
@@ -185,16 +170,31 @@ export default class QuestionsComponent extends Component {
     }
   };
 
+  resultInterval = null;
+
+  fetchResults = async e => {
+    const data = await getFinalResult();
+    this.setState({
+      data: data
+    });
+    // console.log(data);
+  };
+
+  getResults = () => {
+    this.resultInterval = setInterval(this.fetchResults, 1000);
+  };
+
   render() {
-    let timeLeft = this.state.time;
-    timeLeft = Math.floor(timeLeft);
+    let timeLeft = Math.floor(this.state.time);
+    if (timeLeft <= 0) timeLeft = 0;
 
     let Message = null;
+
     Message = props => (
       <div className="modal-body">Points Scored: {props.score || 0}</div>
     );
 
-    if (timeLeft === 0)
+    if (timeLeft == 0)
       Message = () => <div className="modal-body">Time's Up</div>;
 
     if (this.state.gameFinish)
@@ -204,12 +204,12 @@ export default class QuestionsComponent extends Component {
 
     return (
       <div>
-        <div
+        {/* <div
           className="modal"
           id="myModal"
           style={{
             display:
-              timeLeft <= 0 || this.state.submitted || timeLeft === 0
+              (timeLeft <= 0) | this.state.submitted || this.state.gameFinish
                 ? "flex"
                 : "none"
           }}
@@ -219,44 +219,49 @@ export default class QuestionsComponent extends Component {
               <Message score={this.state.score} />
             </div>
           </div>
-        </div>
-        <small className="lead">Time Left: {timeLeft}</small>
+        </div> */}
+
+        <span className="lead" style={{ fontSize: "25px", textAlign: "left" }}>
+          Question {this.state.currentQuestion}
+        </span>
         <br />
-        <label className="h3">Question {this.state.currentQuestion}</label>
         <br />
-        <small className="lead">
+        <span className="h3" style={{ fontSize: "30px", marginTop: "20px" }}>
           {Questions[this.state.currentQuestion].question}
-        </small>
-        <div className="options-container">
-          {Questions[this.state.currentQuestion].options.map((item, index) => (
-            <div
-              style={{ float: "left", width: "50%" }}
-              index={index}
-              key={item[index + 1]}
-            >
-              <button
-                className={
-                  this.state.answer == index + 1
-                    ? `blue-button blue-button-width button-color`
-                    : `blue-button blue-button-width`
-                }
-                onClick={this.onClick}
-                value={index + 1}
-              >
-                {item[index + 1]}
-              </button>
+        </span>
+        <br />
+        <br />
+        <span
+          className="lead"
+          style={{ fontSize: "30px", marginBottom: "20px" }}
+        >
+          Time Left: {timeLeft}
+        </span>
+        <hr />
+        <span className="h3" style={{ fontSize: "30px", marginTop: "20px" }}>
+          Leaderboard
+        </span>
+        <br />
+        <br />
+        <br />
+        {this.state.data.length > 0 &&
+          this.state.data.map((item, index) => (
+            <div key={index} className="result-container">
+              <small className="lead">{item.name} &nbsp;&nbsp;</small>
+              <div className="progress">
+                <div
+                  className="progress-bar"
+                  role="progressbar"
+                  style={{ width: `${(item.totalScore / 40000) * 100}%` }}
+                  aria-valuenow={item.totalScore}
+                  aria-valuemin={0}
+                  aria-valuemax={40000}
+                >
+                  {item.totalScore}
+                </div>
+              </div>
             </div>
           ))}
-          <div className="clearfix" />
-        </div>
-        {timeLeft > 0 && (
-          <button
-            className="blue-button blue-button-width"
-            onClick={this.submitAnswer}
-          >
-            Submit
-          </button>
-        )}
       </div>
     );
   }

@@ -14,12 +14,16 @@ export default class Welcome extends Component {
           <h2>Welcome to the Quiz</h2>
 
           <div>
-            <Link href="/contestants">
+            <Link href="/contestants/team-name">
               <a>Contestant</a>
             </Link>
             <span> | </span>
             <Link href="/moderator">
               <a>Moderator</a>
+            </Link>
+            <span> | </span>
+            <Link href="/tv">
+              <a>TV</a>
             </Link>
           </div>
         </div>

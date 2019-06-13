@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const next = require("next");
-const { port, url, db } = require("./config");
+const { port, url, db, webSocketsServerPort } = require("./config");
 const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
@@ -55,7 +55,7 @@ nextApp
     server.use(bodyParser.json());
 
     server.post("/postResult", (req, res) => {
-      const { name, ques, ans, score } = req.body;
+      const { name, ques, ans, score, time } = req.body;
 
       Game.findOne({ name: name })
         .then(result => {
@@ -69,6 +69,7 @@ nextApp
             ans: ans
           });
           result.totalScore = parseInt(result.totalScore) + parseInt(score);
+          result.totalTime = result.time + time;
           result.save();
           res.json({ success: true });
         })
@@ -124,10 +125,19 @@ nextApp
       const groupId = "test";
 
       Game.find(
+        {},
+        null,
         {
-          groupId: groupId
+          skip: 0,
+          limit: 100,
+          sort: {
+            totalScore: -1
+          }
         },
-        (err, result) => res.json(result)
+        (err, result) => {
+          //console.log(result);
+          return res.json(result);
+        }
       );
     });
 
@@ -141,7 +151,7 @@ nextApp
 
     server.listen(port, err => {
       if (err) throw err;
-      console.log(`> Ready on ${url}:${port}`);
+      console.log(`> Ready on ${url}`);
     });
   })
   .catch(ex => {
@@ -151,7 +161,6 @@ nextApp
 
 /*****************************************************/
 
-var webSocketsServerPort = 1337;
 var webSocketServer = require("websocket").server;
 var http = require("http");
 
@@ -187,7 +196,12 @@ wsServer.on("request", function(request) {
       });
     }
     //console.log(data);
-    if (data.type == "start" || data.type == "next") {
+    if (
+      data.type == "start" ||
+      data.type == "next" ||
+      data.type == "show-instructions" ||
+      data.type == "winner-screen"
+    ) {
       clients.forEach(function(client) {
         client.send(JSON.stringify(data));
       });

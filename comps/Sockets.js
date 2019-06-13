@@ -5,11 +5,21 @@ import { reset } from "../helpers";
 
 export default class Sockets extends Component {
   state = {
-    clients: []
+    clients: [],
+    question: 1
   };
-  ws = new WebSocket(socketUrl);
 
+  ws = new WebSocket(socketUrl);
   componentDidMount() {
+    if (
+      JSON.parse(localStorage.getItem("question")) &&
+      JSON.parse(localStorage.getItem("question")).currentQuestion
+    ) {
+      this.setState({
+        question:
+          JSON.parse(localStorage.getItem("question")).currentQuestion || 1
+      });
+    }
     this.ws.onopen = () => {
       console.log("connected");
       this.ws.send(JSON.stringify({ type: "client", name: this.props.name }));
@@ -33,8 +43,24 @@ export default class Sockets extends Component {
     this.ws.send(JSON.stringify({ type: "start" }));
   };
 
-  onNextQuestion = () => {
-    this.ws.send(JSON.stringify({ type: "next" }));
+  onNextQuestion = number => {
+    this.ws.send(JSON.stringify({ type: "next", question: number }));
+  };
+
+  onShowInstructionsScreenOnTV = () => {
+    this.ws.send(JSON.stringify({ type: "show-instructions" }));
+  };
+
+  onShowWinnerScreen = () => {
+    this.ws.send(JSON.stringify({ type: "winner-screen" }));
+  };
+
+  onNext = () => {
+    let currentQuestion = this.state.question + 1;
+    this.onNextQuestion(currentQuestion);
+    this.setState({ question: currentQuestion });
+
+    localStorage.setItem("question", JSON.stringify({ currentQuestion }));
   };
 
   onReset = () => {
@@ -63,20 +89,38 @@ export default class Sockets extends Component {
               Start
             </button>
           </div>
-          <div>
-            <button
-              className="blue-button blue-button-width"
-              onClick={this.onNextQuestion}
-            >
-              Next Question
-            </button>
-          </div>
-          <div>
+          {this.state.question != 12 && (
+            <div>
+              <button
+                className="blue-button blue-button-width"
+                onClick={this.onNext}
+              >
+                Next Question: {this.state.question + 1}
+              </button>
+            </div>
+          )}
+          {/* <div>
             <button
               className="blue-button blue-button-width"
               onClick={this.onShowResult}
             >
               Show Results
+            </button>
+          </div> */}
+          <div>
+            <button
+              className="blue-button blue-button-width"
+              onClick={this.onShowInstructionsScreenOnTV}
+            >
+              Show Instructions Screen On TV
+            </button>
+          </div>
+          <div>
+            <button
+              className="blue-button blue-button-width"
+              onClick={this.onShowWinnerScreen}
+            >
+              Show Winner Screen
             </button>
           </div>
           <div>
@@ -84,7 +128,15 @@ export default class Sockets extends Component {
               className="blue-button blue-button-width"
               onClick={this.onReset}
             >
-              Reset
+              Reset Users
+            </button>
+          </div>
+          <div>
+            <button
+              className="blue-button blue-button-width"
+              onClick={() => localStorage.setItem("question", null)}
+            >
+              Reset Questions
             </button>
           </div>
         </div>

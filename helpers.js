@@ -2,17 +2,24 @@ const fetch = require("isomorphic-unfetch");
 const { url } = require("./config");
 
 module.exports = {
-  getScore: time => {
-    //accepts seconds
-    if (time < 5) {
-      return 500;
-    } else if (time >= 5 && time <= 10) {
-      return 300;
+  getScore: t => {
+    let time = null;
+
+    if (t < 1) {
+      time = Math.ceil(t);
     } else {
-      return 200;
+      time = Math.floor(t);
     }
+
+    time = 20 - time;
+
+    let max_score = 2000;
+    let score = max_score - time * 100;
+    console.log("max_score: ", max_score);
+    console.log("score: ", score);
+    return score;
   },
-  updateAnswer: (name, ques, ans, score) => {
+  updateAnswer: (name, ques, ans, score, time) => {
     fetch(`${url}/postResult`, {
       method: "POST",
       headers: {
@@ -22,7 +29,8 @@ module.exports = {
         name,
         ques,
         ans,
-        score
+        score,
+        time
       })
     })
       .then(response => response.json())
@@ -44,7 +52,6 @@ module.exports = {
   },
 
   reset: () => {
-    var groupId = "test";
     return fetch(`${url}/reset`, {
       method: "POST",
       headers: {
