@@ -36,8 +36,7 @@ export default class QuestionsComponent extends Component {
         {data.length > 1 && (
           <div>
             <h1>
-              Team:{" "}
-              {data[0].totalScore > data[1].totalScore && data[0].totalScore}
+              Team: {data[0].totalScore > data[1].totalScore && data[0].name}
             </h1>
             <br />
           </div>
@@ -47,6 +46,12 @@ export default class QuestionsComponent extends Component {
           data.map((item, index) => (
             <div key={index} className="result-container">
               <small className="lead">{item.name} &nbsp;&nbsp;</small>
+              <small
+                className="lead"
+                style={{ fontSize: "12px", position: "relative", top: "7px" }}
+              >
+                Total Time: {parseFloat(item.time).toFixed(2)}
+              </small>
               <div className="progress">
                 <div
                   className="progress-bar"

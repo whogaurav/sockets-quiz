@@ -248,6 +248,12 @@ export default class QuestionsComponent extends Component {
           this.state.data.map((item, index) => (
             <div key={index} className="result-container">
               <small className="lead">{item.name} &nbsp;&nbsp;</small>
+              <small
+                className="lead"
+                style={{ fontSize: "12px", position: "relative", top: "7px" }}
+              >
+                Total Time: {parseFloat(item.time).toFixed(2)}
+              </small>
               <div className="progress">
                 <div
                   className="progress-bar"

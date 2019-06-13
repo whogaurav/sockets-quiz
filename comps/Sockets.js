@@ -128,15 +128,18 @@ export default class Sockets extends Component {
               className="blue-button blue-button-width"
               onClick={this.onReset}
             >
-              Reset Users
+              Reset Users (Use Carefully)
             </button>
           </div>
           <div>
             <button
               className="blue-button blue-button-width"
-              onClick={() => localStorage.setItem("question", null)}
+              onClick={() => {
+                localStorage.setItem("question", null);
+                this.setState({ question: 1 });
+              }}
             >
-              Reset Questions
+              Reset Questions (Use Carefully)
             </button>
           </div>
         </div>

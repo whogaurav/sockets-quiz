@@ -56,6 +56,7 @@ nextApp
 
     server.post("/postResult", (req, res) => {
       const { name, ques, ans, score, time } = req.body;
+      const timeTaken = 20 - parseFloat(time).toFixed(2);
 
       Game.findOne({ name: name })
         .then(result => {
@@ -69,7 +70,8 @@ nextApp
             ans: ans
           });
           result.totalScore = parseInt(result.totalScore) + parseInt(score);
-          result.totalTime = result.time + time;
+          result.time = parseFloat(result.time) + timeTaken;
+
           result.save();
           res.json({ success: true });
         })
@@ -94,7 +96,8 @@ nextApp
             {
               name: name,
               groupId: groupId,
-              totalScore: parseInt(0)
+              totalScore: parseInt(0),
+              time: parseFloat(0)
             },
             function(err, user) {
               if (err) {
