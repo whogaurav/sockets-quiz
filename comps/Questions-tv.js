@@ -203,7 +203,7 @@ export default class QuestionsComponent extends Component {
       );
 
     return (
-      <div>
+      <div style={{ width: "90%" }}>
         {timeLeft != 0 && (
           <span>
             <span
@@ -245,15 +245,11 @@ export default class QuestionsComponent extends Component {
         {timeLeft === 0 &&
           this.state.data.length > 0 &&
           this.state.data.map((item, index) => (
-            <div
-              key={index}
-              className="result-container"
-              style={{ width: "100%" }}
-            >
+            <div key={index} className="result-container">
               <small className="lead">{item.name} &nbsp;&nbsp;</small>
               <small
                 className="lead"
-                style={{ fontSize: "12px", position: "relative", top: "7px" }}
+                style={{ fontSize: "16px", position: "relative", top: "7px" }}
               >
                 Total Time: {parseFloat(item.time).toFixed(2)}
               </small>
