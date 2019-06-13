@@ -2,27 +2,32 @@
   "1": {
     "question": "Among the following four Moroccan cities, which one is most populated ?",
     "options": [{ "1": "Casablanca: 3M" }, { "2": "Rabat: 1.7M" }, { "3": "Fes: 1M" }, { "4": "Marrakesh:  0.9M" }],
-    "answer": "1"
+    "answer": "1",
+    "image": "/static/q1.png"
   },
   "2": {
     "question": "Which of the following food is NOT a Moroccan traditional ?",
     "options": [{ "1": "Tagine" }, { "2": "Knafa" }, { "3": "Kaab El Ghazal" }, { "4": "Harira Soup" }],
-    "answer": "2"
+    "answer": "2",
+    "image": "/static/q2.png"
   },
   "3": {
     "question": "Which one does NOT belong to the four imperial cities in Morocco ?",
     "options": [{ "1": "Fes" }, { "2": "Tanger" }, { "3": "Marrakesh" }, { "4": "Meknes" }],
-    "answer": "2"
+    "answer": "2",
+    "image": "/static/q3.png"
   },
   "4": {
     "question": "What will you most probably NOT do when you travel in Atlas area ?",
     "options": [{ "1": "Ride a camel" }, { "2": "Fly with Balloon" }, { "3": "Surfing" }, { "4": "aste high tea" }],
-    "answer": "3"
+    "answer": "3",
+    "image": "/static/q4.png"
   },
   "5": {
     "question": "When did French Telecom start to use Orange as its brand ?",
     "options": [{ "1": "1994" }, { "2": "2000" }, { "3": "2006" }, { "4": "2013" }],
-    "answer": "3"
+    "answer": "3",
+    "image": "/static/other.png"
   },
   "6": {
     "question": "Orange Maroc opened a digital center in Casablanca in 2019, aiming for…",
@@ -32,36 +37,43 @@
       { "3": "Helping aged people" },
       { "4": "Helping young people" }
     ],
-    "answer": "2"
+    "answer": "2",
+    "image": "/static/q6.png"
   },
   "7": {
     "question": "How many years was Stephane Richard CEO of Orange ?",
     "options": [{ "1": "5" }, { "2": "6" }, { "3": "7" }, { "4": "8" }],
-    "answer": "4"
+    "answer": "4",
+    "image": "/static/other.png"
   },
   "8": {
     "question": "How many Affiliates does Orange have worldwide ?",
     "options": [{ "1": "25" }, { "2": "32" }, { "3": "30" }, { "4": "28" }],
-    "answer": "3"
+    "answer": "3",
+    "image": "/static/other.png"
   },
   "9": {
     "question": "In which year Orange started cooperation with ZTE in system equipment ?",
     "options": [{ "1": "2008" }, { "2": "2009" }, { "3": "2010" }, { "4": "2011" }],
-    "answer": "2"
+    "answer": "2",
+    "image": "/static/other.png"
   },
   "10": {
     "question": "How many Orange active subscribers in total managed by ZTE SDM by the end of 2018 ?",
     "options": [{ "1": "29M" }, { "2": "39M" }, { "3": "49M" }, { "4": "59M" }],
-    "answer": "4"
+    "answer": "4",
+    "image": "/static/other.png"
   },
   "11": {
     "question": "How many Orange countries currently have projects with ZTE ?",
     "options": [{ "1": "11" }, { "2": "14" }, { "3": "19" }, { "4": "24" }],
-    "answer": "3"
+    "answer": "3",
+    "image": "/static/other.png"
   },
   "12": {
     "question": "Among the 2 Corporate RFPs launched in 2019, in how many ZTE got selected ?",
     "options": [{ "1": "Zero" }, { "2": "Just passed the shortlist" }, { "3": "1" }, { "4": "Both" }],
-    "answer": "4"
+    "answer": "4",
+    "image": "/static/other.png"
   }
 }

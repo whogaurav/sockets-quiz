@@ -230,6 +230,10 @@ export default class QuestionsComponent extends Component {
               Time Left: {timeLeft}
             </span>
             <hr />
+            <img
+              src={Questions[this.state.currentQuestion].image}
+              style={{ width: "500px" }}
+            />
           </span>
         )}
 
