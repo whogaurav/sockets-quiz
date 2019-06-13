@@ -135,8 +135,8 @@ html, body, #__next, .layout {
     font-size: 30px !important;
 }
 
-.instructions-container{
-    width: 65%;
+.instructions-container {
+    width: 410px;
     text-align: center;
 }
 

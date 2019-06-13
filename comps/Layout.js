@@ -26,10 +26,12 @@ export default class Layout extends Component {
   render() {
     const props = this.props;
     const className = props.className || "";
-
+    const style = props.style || {};
     return (
       <div className="layout">
-        <div className={`main-screen ${className}`}>{props.children}</div>
+        <div style={style} className={`main-screen ${className}`}>
+          {props.children}
+        </div>
       </div>
     );
   }
