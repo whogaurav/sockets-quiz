@@ -204,49 +204,52 @@ export default class QuestionsComponent extends Component {
 
     return (
       <div>
-        {/* <div
-          className="modal"
-          id="myModal"
-          style={{
-            display:
-              (timeLeft <= 0) | this.state.submitted || this.state.gameFinish
-                ? "flex"
-                : "none"
-          }}
-        >
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <Message score={this.state.score} />
-            </div>
-          </div>
-        </div> */}
+        {timeLeft != 0 && (
+          <span>
+            <span
+              className="lead"
+              style={{ fontSize: "25px", textAlign: "left" }}
+            >
+              Question {this.state.currentQuestion}
+            </span>
+            <br />
+            <br />
+            <span
+              className="h3"
+              style={{ fontSize: "30px", marginTop: "20px" }}
+            >
+              {Questions[this.state.currentQuestion].question}
+            </span>
+            <br />
+            <br />
 
-        <span className="lead" style={{ fontSize: "25px", textAlign: "left" }}>
-          Question {this.state.currentQuestion}
-        </span>
-        <br />
-        <br />
-        <span className="h3" style={{ fontSize: "30px", marginTop: "20px" }}>
-          {Questions[this.state.currentQuestion].question}
-        </span>
-        <br />
-        <br />
-        <span
-          className="lead"
-          style={{ fontSize: "30px", marginBottom: "20px" }}
-        >
-          Time Left: {timeLeft}
-        </span>
-        <hr />
-        <span className="h3" style={{ fontSize: "30px", marginTop: "20px" }}>
-          Leaderboard
-        </span>
+            <span
+              className="lead"
+              style={{ fontSize: "30px", marginBottom: "20px" }}
+            >
+              Time Left: {timeLeft}
+            </span>
+            <hr />
+          </span>
+        )}
+
+        {timeLeft === 0 && (
+          <span className="h3" style={{ fontSize: "30px", marginTop: "20px" }}>
+            Leaderboard
+          </span>
+        )}
         <br />
         <br />
         <br />
-        {this.state.data.length > 0 &&
+
+        {timeLeft === 0 &&
+          this.state.data.length > 0 &&
           this.state.data.map((item, index) => (
-            <div key={index} className="result-container">
+            <div
+              key={index}
+              className="result-container"
+              style={{ width: "100%" }}
+            >
               <small className="lead">{item.name} &nbsp;&nbsp;</small>
               <small
                 className="lead"

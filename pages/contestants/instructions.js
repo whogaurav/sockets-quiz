@@ -39,18 +39,10 @@ class Instructions extends Component {
         <div className="main-screen-container instructions-container">
           <h1>Instructions</h1>
           <p>
-            And an even wittier subheading.And an even wittier subheading.And an
-            even wittier subheading.And an even wittier subheading.And an even
-            wittier subheading.And an even wittier subheading.And an even
-            wittier subheading.And an even wittier subheading.And an even
-            wittier subheading.And an even wittier subheading.And an even
-            wittier subheading.And an even wittier subheading
+            Try to answer to the 12 questions as fast as possible in order to
+            collect a maximum amount of points. <br />
+            You have 20 seconds per question.
           </p>
-          {/* <Link href="/contestants/questions">
-            <button className="blue-button" onClick={this.onSubmit}>
-              Continue
-            </button>
-          </Link> */}
         </div>
       </Layout>
     );
